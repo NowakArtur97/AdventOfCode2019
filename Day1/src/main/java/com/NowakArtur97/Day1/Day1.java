@@ -1,15 +1,18 @@
 package com.NowakArtur97.Day1;
 
-import java.util.List;
+import java.math.BigInteger;
 
-import com.NowakArtur97.Day1.Util.api.InputsReader;
-import com.NowakArtur97.Day1.Util.impl.InputsReaderImpl;
+import com.NowakArtur97.Day1.service.api.FuelRequirement;
+import com.NowakArtur97.Day1.service.impl.FuelRequirementImpl;
 
 public class Day1 {
-	private static InputsReader inputsReader = new InputsReaderImpl();
+
+	private final static FuelRequirement fuelRequirement = new FuelRequirementImpl();
 
 	public static void main(String[] args) {
-		List<Integer> inputs = inputsReader.loadInputsFromFile();
-		System.out.println(inputs);
+
+		BigInteger totalFuelRequired = fuelRequirement.sumFuel();
+
+		System.out.println("Answer: " + totalFuelRequired);
 	}
 }
