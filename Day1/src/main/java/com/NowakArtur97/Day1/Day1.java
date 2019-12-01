@@ -11,8 +11,12 @@ public class Day1 {
 
 	public static void main(String[] args) {
 
-		BigInteger totalFuelRequired = fuelRequirement.sumFuel();
+		BigInteger totalFuelRequired1 = fuelRequirement.sumFuelFirstAnswer();
 
-		System.out.println("Answer: " + totalFuelRequired);
+		BigInteger totalFuelRequired2 = fuelRequirement.sumFuelSecondAnswer();
+
+		System.out.println("First answer: " + totalFuelRequired1);
+
+		System.out.println("Second answer: " + totalFuelRequired2);
 	}
 }

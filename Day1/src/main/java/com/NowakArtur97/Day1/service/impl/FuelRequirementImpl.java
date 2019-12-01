@@ -1,7 +1,6 @@
 package com.NowakArtur97.Day1.service.impl;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.NowakArtur97.Day1.service.api.FuelRequirement;
@@ -12,11 +11,18 @@ public class FuelRequirementImpl implements FuelRequirement {
 
 	private static InputsReader inputsReader = new InputsReaderImpl();
 
-	private List<BigInteger> inputs = new ArrayList<>();
+	private final List<BigInteger> inputs;
+
+	private final BigInteger BIG_INTEGER_OF_ZERO = new BigInteger("0");
 
 	private final BigInteger BIG_INTEGER_OF_TWO = new BigInteger("2");
 
 	private final BigInteger BIG_INTEGER_OF_THREE = new BigInteger("3");
+
+	public FuelRequirementImpl() {
+
+		inputs = inputsReader.loadInputsFromFile();
+	}
 
 	@Override
 	public BigInteger convertMassToFuel(BigInteger mass) {
@@ -25,9 +31,7 @@ public class FuelRequirementImpl implements FuelRequirement {
 	}
 
 	@Override
-	public BigInteger sumFuel() {
-
-		inputs = inputsReader.loadInputsFromFile();
+	public BigInteger sumFuelFirstAnswer() {
 
 		BigInteger sum = BigInteger.ZERO;
 
@@ -39,6 +43,36 @@ public class FuelRequirementImpl implements FuelRequirement {
 		}
 
 		return sum;
+	}
+
+	@Override
+	public BigInteger sumFuelSecondAnswer() {
+
+		BigInteger totalSum = BigInteger.ZERO;
+
+		for (BigInteger input : inputs) {
+
+			BigInteger sum = BigInteger.ZERO;
+
+			input = convertMassToFuel(input);
+
+			while (isValueBiggerThan0(input)) {
+
+				sum = sum.add(input);
+
+				input = convertMassToFuel(input);
+			}
+
+			totalSum = totalSum.add(sum);
+		}
+
+		return totalSum;
+	}
+
+	@Override
+	public boolean isValueBiggerThan0(BigInteger input) {
+
+		return input.compareTo(BIG_INTEGER_OF_ZERO) > -1;
 	}
 
 }

@@ -6,5 +6,9 @@ public interface FuelRequirement {
 
 	BigInteger convertMassToFuel(BigInteger mass);
 
-	BigInteger sumFuel();
+	BigInteger sumFuelFirstAnswer();
+
+	BigInteger sumFuelSecondAnswer();
+
+	boolean isValueBiggerThan0(BigInteger input);
 }
