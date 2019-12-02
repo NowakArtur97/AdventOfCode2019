@@ -8,7 +8,15 @@ import com.NowakArtur97.Day2.util.impl.InputsReaderImpl;
 
 public class IntcodeServiceImpl implements IntcodeService {
 
-	private InputsReader inputsReader = new InputsReaderImpl();
+	private final InputsReader inputsReader;
+
+	private final List<Integer> inputs;
+
+	public IntcodeServiceImpl() {
+
+		inputsReader = new InputsReaderImpl();
+		inputs = inputsReader.loadInputsFromFile();
+	}
 
 	@Override
 	public Integer addNumbers(Integer number1, Integer number2) {
@@ -23,15 +31,48 @@ public class IntcodeServiceImpl implements IntcodeService {
 	}
 
 	@Override
-	public void switchValues(List<Integer> inputs, Integer index, Integer index2) {
+	public Integer processOpcode() {
 
-		Integer temp = inputs.get(index);
-		inputs.set(index, inputs.get(index2));
-		inputs.set(index2, temp);
-	}
-
-	@Override
-	public void processOpcode() {
+		inputs.set(1, 12);
+		inputs.set(2, 2);
 		
+		for (int i = 0; i < inputs.size();) {
+
+			Integer input = inputs.get(i);
+
+			if (input == 1) {
+
+				Integer number1 = inputs.get(inputs.get(i + 1));
+
+				Integer number2 = inputs.get(inputs.get(i + 2));
+
+				Integer sum = addNumbers(number1, number2);
+
+				int index = inputs.get(i + 3);
+
+				inputs.set(index, sum);
+
+				i += 4;
+
+			} else if (input == 2) {
+
+				Integer number1 = inputs.get(inputs.get(i + 1));
+
+				Integer number2 = inputs.get(inputs.get(i + 2));
+
+				Integer multiply = multiplyNumbers(number1, number2);
+
+				int index = inputs.get(i + 3);
+
+				inputs.set(index, multiply);
+
+				i += 4;
+
+			} else if (input == 99) {
+				break;
+			}
+		}
+
+		return inputs.get(0);
 	}
 }
