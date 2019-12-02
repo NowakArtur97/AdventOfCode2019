@@ -35,11 +35,14 @@ public class InputsReaderImpl implements InputsReader {
 			System.out.println("IO Exception " + e.getMessage());
 		}
 
-		return convertStringToArrayList(sb);
+		return convertStringToListOfIntegers(sb.toString());
 	}
 
-	private List<Integer> convertStringToArrayList(StringBuilder sb) {
-		return Stream.of(sb.toString().split(",")).map(Integer::parseInt).collect(Collectors.toList());
+	private List<Integer> convertStringToListOfIntegers(String string) {
+		
+		return Stream.of(string.split(","))
+				.map(Integer::parseInt)
+				.collect(Collectors.toList());
 	}
 
 }
