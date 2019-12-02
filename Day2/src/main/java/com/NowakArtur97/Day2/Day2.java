@@ -9,6 +9,7 @@ public class Day2 {
 
 	public static void main(String[] args) {
 
-		System.out.println("First answer " + intcodeService.processOpcode());
+		System.out.println("First answer " + intcodeService.processOpcodeFirstAnswer());
+		System.out.println("Second answer " + intcodeService.processOpcodeSecondAnswer());
 	}
 }
