@@ -12,20 +12,28 @@ import com.NowakArtur97.Day3.util.impl.InputsReaderImpl;
 
 public class CrossedWiresImpl implements CrossedWires {
 
-	private File inputsFile1 = new File(
-			"C:\\Users\\Samsung\\Spring\\eclipse-workspace\\Projects\\Advent of Code\\Day3\\src\\resources\\inputs1.txt");
+	private final String FILE_DIRECTION_1 = "C:\\Users\\Samsung\\Spring\\eclipse-workspace\\Projects\\Advent of Code\\Day3\\src\\resources\\inputs1.txt";
+	private final String FILE_DIRECTION_2 = "C:\\Users\\Samsung\\Spring\\eclipse-workspace\\Projects\\Advent of Code\\Day3\\src\\resources\\inputs2.txt";
 
-	private File inputsFile2 = new File(
-			"C:\\Users\\Samsung\\Spring\\eclipse-workspace\\Projects\\Advent of Code\\Day3\\src\\resources\\inputs2.txt");
+	private final File inputsFile1;
+	private final File inputsFile2;
+	private final InputsReader inputsReader;
 
-	private final InputsReader inputsReader = new InputsReaderImpl();
+	private final List<String> directions1;
+	private final List<String> directions2;
+
+	public CrossedWiresImpl() {
+		this.inputsFile1 = new File(FILE_DIRECTION_1);
+		this.inputsFile2 = new File(FILE_DIRECTION_2);
+		
+		this.inputsReader = new InputsReaderImpl();
+
+		this.directions1 = inputsReader.loadInputsFromFile(inputsFile1);
+		this.directions2 = inputsReader.loadInputsFromFile(inputsFile2);
+	}
 
 	@Override
-	public Integer countManhattanDistance() throws Exception {
-
-		List<String> directions1 = inputsReader.loadInputsFromFile(inputsFile1);
-
-		List<String> directions2 = inputsReader.loadInputsFromFile(inputsFile2);
+	public Integer countManhattanDistanceFirstAnswer() throws Exception {
 
 		List<Point> wire1 = createWire(directions1);
 		List<Point> wire2 = createWire(directions2);
@@ -44,6 +52,24 @@ public class CrossedWiresImpl implements CrossedWires {
 		int closestDistance = Math.abs(closestPoint.getX()) + Math.abs(closestPoint.getY());
 
 		return closestDistance;
+	}
+
+	@Override
+	public Integer countManhattanDistanceSecondAnswer() throws Exception {
+
+		List<Point> wire1 = createWire(directions1);
+		List<Point> toRetain = createWire(directions1);
+		List<Point> wire2 = createWire(directions2);
+
+		toRetain.retainAll(wire2);
+
+		List<Point> pointsWithoutCentralPort = toRetain.stream().filter(p -> p.getX() != 0 && p.getY() != 0)
+				.collect(Collectors.toList());
+
+		int fewestSteps = pointsWithoutCentralPort.stream().map(p -> wire1.indexOf(p) + wire2.indexOf(p)).sorted()
+				.findFirst().get();
+
+		return fewestSteps;
 	}
 
 	private List<Point> createWire(List<String> directions) throws Exception {
