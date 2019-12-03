@@ -32,8 +32,6 @@ public class CrossedWiresImpl implements CrossedWires {
 
 		wire1.retainAll(wire2);
 
-		System.out.println(wire1);
-		
 		List<Point> pointsWithoutCentralPort = wire1.stream().filter(p -> p.getX() != 0 && p.getY() != 0)
 				.collect(Collectors.toList());
 
@@ -66,13 +64,12 @@ public class CrossedWiresImpl implements CrossedWires {
 		return wire;
 	}
 
-	private void createPointsBasedOnCourse(String course, int amount, List<Point> wire)
-			throws Exception {
+	private void createPointsBasedOnCourse(String course, int amount, List<Point> wire) throws Exception {
 
 		int xOffset = 0;
 
 		int yOffset = 0;
-		
+
 		switch (course) {
 
 		case "R":
@@ -81,11 +78,11 @@ public class CrossedWiresImpl implements CrossedWires {
 		case "L":
 			xOffset = -1;
 			break;
-		case "D":
-			yOffset = -1;
-			break;
 		case "U":
 			yOffset = 1;
+			break;
+		case "D":
+			yOffset = -1;
 			break;
 		default:
 			throw new Exception();
@@ -95,16 +92,14 @@ public class CrossedWiresImpl implements CrossedWires {
 	}
 
 	private void createStraightLineOfPoints(int amount, List<Point> wire, int xOffset, int yOffset) {
-		
-		Point newPoint;
-		
+
 		for (int i = 0; i < amount; i++) {
 
 			Point lastPoint = wire.get(wire.size() - 1);
 
-			newPoint = new Point(lastPoint.getX() + xOffset, lastPoint.getY() + yOffset);
+			Point currentPoint = new Point(lastPoint.getX() + xOffset, lastPoint.getY() + yOffset);
 
-			wire.add(newPoint);
+			wire.add(currentPoint);
 		}
 	}
 }

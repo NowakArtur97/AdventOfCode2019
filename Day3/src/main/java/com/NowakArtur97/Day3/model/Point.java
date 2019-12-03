@@ -1,5 +1,7 @@
 package com.NowakArtur97.Day3.model;
 
+import java.util.Objects;
+
 public class Point {
 
 	private int x;
@@ -33,6 +35,26 @@ public class Point {
 	@Override
 	public String toString() {
 		return "Point [x=" + x + ", y=" + y + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(x, y);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Point)) {
+			return false;
+		}
+		Point other = (Point) obj;
+		return x == other.x && y == other.y;
 	}
 
 }
