@@ -1,4 +1,4 @@
-package com.NowakArtur97.Day3.service.api;
+package com.NowakArtur97.Day3.logic.api;
 
 public interface CrossedWires {
 

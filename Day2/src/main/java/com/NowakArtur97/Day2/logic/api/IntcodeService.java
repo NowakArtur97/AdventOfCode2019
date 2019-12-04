@@ -1,4 +1,4 @@
-package com.NowakArtur97.Day2.service.api;
+package com.NowakArtur97.Day2.logic.api;
 
 public interface IntcodeService {
 

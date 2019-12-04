@@ -1,7 +1,7 @@
 package com.NowakArtur97.Day3;
 
-import com.NowakArtur97.Day3.service.api.CrossedWires;
-import com.NowakArtur97.Day3.service.impl.CrossedWiresImpl;
+import com.NowakArtur97.Day3.logic.api.CrossedWires;
+import com.NowakArtur97.Day3.logic.impl.CrossedWiresImpl;
 
 public class Day3 {
 	private final static CrossedWires crossedWires = new CrossedWiresImpl();

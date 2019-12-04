@@ -1,12 +1,12 @@
-package com.NowakArtur97.Day3.service.impl;
+package com.NowakArtur97.Day3.logic.impl;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.NowakArtur97.Day3.logic.api.CrossedWires;
 import com.NowakArtur97.Day3.model.Point;
-import com.NowakArtur97.Day3.service.api.CrossedWires;
 import com.NowakArtur97.Day3.util.api.InputsReader;
 import com.NowakArtur97.Day3.util.impl.InputsReaderImpl;
 

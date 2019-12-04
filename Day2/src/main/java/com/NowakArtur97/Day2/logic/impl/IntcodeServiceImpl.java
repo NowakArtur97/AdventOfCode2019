@@ -1,9 +1,9 @@
-package com.NowakArtur97.Day2.service.impl;
+package com.NowakArtur97.Day2.logic.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.NowakArtur97.Day2.service.api.IntcodeService;
+import com.NowakArtur97.Day2.logic.api.IntcodeService;
 import com.NowakArtur97.Day2.util.api.InputsReader;
 import com.NowakArtur97.Day2.util.impl.InputsReaderImpl;
 

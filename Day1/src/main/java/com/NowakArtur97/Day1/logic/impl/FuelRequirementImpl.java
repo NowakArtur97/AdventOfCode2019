@@ -1,9 +1,9 @@
-package com.NowakArtur97.Day1.service.impl;
+package com.NowakArtur97.Day1.logic.impl;
 
 import java.math.BigInteger;
 import java.util.List;
 
-import com.NowakArtur97.Day1.service.api.FuelRequirement;
+import com.NowakArtur97.Day1.logic.api.FuelRequirement;
 import com.NowakArtur97.Day1.util.api.InputsReader;
 import com.NowakArtur97.Day1.util.impl.InputsReaderImpl;
 

@@ -2,8 +2,8 @@ package com.NowakArtur97.Day1;
 
 import java.math.BigInteger;
 
-import com.NowakArtur97.Day1.service.api.FuelRequirement;
-import com.NowakArtur97.Day1.service.impl.FuelRequirementImpl;
+import com.NowakArtur97.Day1.logic.api.FuelRequirement;
+import com.NowakArtur97.Day1.logic.impl.FuelRequirementImpl;
 
 public class Day1 {
 

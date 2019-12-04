@@ -1,7 +1,7 @@
 package com.NowakArtur97.Day2;
 
-import com.NowakArtur97.Day2.service.api.IntcodeService;
-import com.NowakArtur97.Day2.service.impl.IntcodeServiceImpl;
+import com.NowakArtur97.Day2.logic.api.IntcodeService;
+import com.NowakArtur97.Day2.logic.impl.IntcodeServiceImpl;
 
 public class Day2 {
 

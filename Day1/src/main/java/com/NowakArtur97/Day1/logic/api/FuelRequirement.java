@@ -1,4 +1,4 @@
-package com.NowakArtur97.Day1.service.api;
+package com.NowakArtur97.Day1.logic.api;
 
 import java.math.BigInteger;
 
