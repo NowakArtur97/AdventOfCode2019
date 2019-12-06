@@ -1,5 +1,6 @@
 package com.NowakArtur97.Day6.logic.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,18 +28,48 @@ public class OrbitCounterImpl implements OrbitCounter {
 		this.listOfOrbits = inputReader.loadInputsFromFile();
 		this.orbitMap = new HashSet<>();
 		fillOrbitsMap();
+		createTreeOfOrbits();
 	}
 
 	@Override
 	public int countOrbitsFirstAnswer() {
 
-		createTreeOfOrbits();
-
 		for (Orbit<String> orbit : orbitMap) {
 			countOrbits(orbit);
 		}
 
-		return COUNTER; // 2306 low
+		return COUNTER;
+	}
+
+	@Override
+	public int countOrbitsSecondAnswer() {
+
+		Orbit<String> YOU = findOrbitByName("YOU");
+		Orbit<String> SAN = findOrbitByName("SAN");
+
+		List<Orbit<String>> parentsYOU = getAllParentsToParent(YOU, "COM");
+		List<Orbit<String>> parentsSAN = getAllParentsToParent(SAN, "COM");
+
+		parentsYOU.retainAll(parentsSAN);
+
+		Orbit<String> firstShareParent = parentsYOU.get(0);
+
+		parentsYOU = getAllParentsToParent(YOU, firstShareParent.getName());
+		parentsSAN = getAllParentsToParent(SAN, firstShareParent.getName());
+
+		return parentsYOU.size() + parentsSAN.size() - 2;
+	}
+
+	private List<Orbit<String>> getAllParentsToParent(Orbit<String> orbit, String parentName) {
+
+		List<Orbit<String>> parentList = new ArrayList<Orbit<String>>();
+
+		while (!orbit.getName().equals(parentName)) {
+			orbit = orbit.getParent();
+			parentList.add(orbit);
+		}
+
+		return parentList;
 	}
 
 	private void countOrbits(Orbit<String> parent) {
