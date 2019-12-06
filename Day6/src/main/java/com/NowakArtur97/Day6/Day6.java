@@ -7,6 +7,6 @@ public class Day6 {
 	private final static OrbitCounter orbitCounter = new OrbitCounterImpl();
 
 	public static void main(String[] args) {
-		System.out.println(orbitCounter.countOrbits());
+		System.out.println(orbitCounter.countOrbitsFirstAnswer());
 	}
 }
