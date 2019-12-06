@@ -5,28 +5,27 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.NowakArtur97.Day6.util.api.InputsReader;
 
 public class InputsReaderImpl implements InputsReader {
 
+	private List<String> inputs = new ArrayList<>();
+
 	private File inputsFile = new File(
 			"C:\\Users\\Samsung\\Spring\\eclipse-workspace\\Projects\\Advent of Code\\Day6\\src\\resources\\inputs.txt");
 
 	@Override
-	public List<Integer> loadInputsFromFile() {
-
-		StringBuilder sb = new StringBuilder();
+	public List<String> loadInputsFromFile() {
 
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(inputsFile))) {
 
 			String input = null;
 
 			while ((input = bufferedReader.readLine()) != null) {
-				sb.append(input);
+				inputs.add(input);
 			}
 
 		} catch (FileNotFoundException e) {
@@ -35,14 +34,7 @@ public class InputsReaderImpl implements InputsReader {
 			System.out.println("IO Exception " + e.getMessage());
 		}
 
-		return convertStringToListOfIntegers(sb.toString());
-	}
-
-	private List<Integer> convertStringToListOfIntegers(String string) {
-		
-		return Stream.of(string.split(","))
-				.map(Integer::parseInt)
-				.collect(Collectors.toList());
+		return inputs;
 	}
 
 }
