@@ -28,23 +28,13 @@ public class IntcodeServiceImpl implements IntcodeService {
 		return number1 * number2;
 	}
 
-	@Override
-	public Integer processIntcodeFirstAnswer() {
-
-		List<Integer> inputs = new ArrayList<>(originalInputs);
-
-		boolean app = true;
-
-		inputs.set(1, 12);
-		inputs.set(2, 2);
-
-		Instruction instruction = null;
+	private void runProgram(List<Integer> inputs) {
 
 		int i = 0;
 
-		while (app) {
+		while (true) {
 
-			instruction = new Instruction(i, inputs);
+			Instruction instruction = new Instruction(i, inputs);
 
 			Integer parameter1 = instruction.getParameter1();
 			Integer parameter2 = instruction.getParameter2();
@@ -63,12 +53,23 @@ public class IntcodeServiceImpl implements IntcodeService {
 				break;
 
 			case END:
-				app = false;
-				break;
+
+				return;
 			}
 		}
+	}
 
-		return instruction.getInputs().get(0);
+	@Override
+	public Integer processIntcodeFirstAnswer() {
+
+		List<Integer> inputs = new ArrayList<>(originalInputs);
+
+		inputs.set(1, 12);
+		inputs.set(2, 2);
+
+		runProgram(inputs);
+
+		return inputs.get(0);
 	}
 
 	@Override
@@ -79,45 +80,14 @@ public class IntcodeServiceImpl implements IntcodeService {
 		for (int noun = 0; noun < 100; noun++) {
 			for (int verb = 0; verb < 100; verb++) {
 
-				int i = 0;
-
 				inputs = new ArrayList<>(originalInputs);
 
 				inputs.set(1, noun);
 				inputs.set(2, verb);
 
-				Instruction instruction = null;
+				runProgram(inputs);
 
-				boolean app = true;
-
-				while (app) {
-
-					instruction = new Instruction(i, inputs);
-
-					Integer parameter1 = instruction.getParameter1();
-					Integer parameter2 = instruction.getParameter2();
-
-					switch (instruction.getOpCode()) {
-
-					case ADD:
-						instruction.getInputs().set(instruction.getInputs().get(i + 3),
-								addNumbers(parameter1, parameter2));
-						i += 4;
-						break;
-
-					case MULTIPLY:
-						instruction.getInputs().set(instruction.getInputs().get(i + 3),
-								multiplyNumbers(parameter1, parameter2));
-						i += 4;
-						break;
-
-					case END:
-						app = false;
-						break;
-					}
-				}
-
-				if (instruction.getInputs().get(0) == 19690720) {
+				if (inputs.get(0) == 19690720) {
 					return 100 * noun + verb;
 				}
 			}
