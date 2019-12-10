@@ -4,141 +4,125 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.NowakArtur97.Day2.logic.api.IntcodeService;
+import com.NowakArtur97.Day2.model.Instruction;
 import com.NowakArtur97.Day2.util.api.InputsReader;
 import com.NowakArtur97.Day2.util.impl.InputsReaderImpl;
 
 public class IntcodeServiceImpl implements IntcodeService {
 
 	private final InputsReader inputsReader;
-
-	private List<Integer> inputs;
-
-	private List<Integer> inputsOriginal;
+	private final List<Integer> originalInputs;
 
 	public IntcodeServiceImpl() {
-
 		inputsReader = new InputsReaderImpl();
-		inputs = inputsReader.loadInputsFromFile();
-		inputsOriginal = new ArrayList<Integer>(inputs);
+		originalInputs = inputsReader.loadInputsFromFile();
 	}
 
-	@Override
 	public Integer addNumbers(Integer number1, Integer number2) {
 
 		return number1 + number2;
 	}
 
-	@Override
 	public Integer multiplyNumbers(Integer number1, Integer number2) {
 
 		return number1 * number2;
 	}
 
 	@Override
-	public Integer processOpcodeFirstAnswer() {
+	public Integer processIntcodeFirstAnswer() {
+
+		List<Integer> inputs = new ArrayList<>(originalInputs);
+
+		boolean app = true;
 
 		inputs.set(1, 12);
 		inputs.set(2, 2);
 
-		for (int i = 0; i < inputs.size();) {
+		Instruction instruction = null;
 
-			Integer input = inputs.get(i);
+		int i = 0;
 
-			if (input == 1) {
+		while (app) {
 
-				Integer number1 = inputs.get(inputs.get(i + 1));
+			instruction = new Instruction(i, inputs);
 
-				Integer number2 = inputs.get(inputs.get(i + 2));
+			Integer parameter1 = instruction.getParameter1();
+			Integer parameter2 = instruction.getParameter2();
 
-				Integer sum = addNumbers(number1, number2);
+			switch (instruction.getOpCode()) {
 
-				int index = inputs.get(i + 3);
-
-				inputs.set(index, sum);
-
+			case ADD:
+				instruction.getInputs().set(instruction.getInputs().get(i + 3), addNumbers(parameter1, parameter2));
 				i += 4;
+				break;
 
-			} else if (input == 2) {
-
-				Integer number1 = inputs.get(inputs.get(i + 1));
-
-				Integer number2 = inputs.get(inputs.get(i + 2));
-
-				Integer multiply = multiplyNumbers(number1, number2);
-
-				int index = inputs.get(i + 3);
-
-				inputs.set(index, multiply);
-
+			case MULTIPLY:
+				instruction.getInputs().set(instruction.getInputs().get(i + 3),
+						multiplyNumbers(parameter1, parameter2));
 				i += 4;
+				break;
 
-			} else if (input == 99) {
+			case END:
+				app = false;
 				break;
 			}
 		}
 
-		return inputs.get(0);
+		return instruction.getInputs().get(0);
 	}
 
 	@Override
-	public Integer processOpcodeSecondAnswer() {
+	public Integer processIntcodeSecondAnswer() {
 
-		for (int j = 0; j <= 99; j++) {
+		List<Integer> inputs;
 
-			int noun = j;
+		for (int noun = 0; noun < 100; noun++) {
+			for (int verb = 0; verb < 100; verb++) {
 
-			for (int k = 0; k <= 99; k++) {
+				int i = 0;
 
-				inputs = new ArrayList<Integer>(inputsOriginal);
-
-				int verb = k;
+				inputs = new ArrayList<>(originalInputs);
 
 				inputs.set(1, noun);
 				inputs.set(2, verb);
 
-				for (int i = 0; i < inputs.size();) {
+				Instruction instruction = null;
 
-					Integer input = inputs.get(i);
+				boolean app = true;
 
-					if (input == 1) {
+				while (app) {
 
-						Integer number1 = inputs.get(inputs.get(i + 1));
+					instruction = new Instruction(i, inputs);
 
-						Integer number2 = inputs.get(inputs.get(i + 2));
+					Integer parameter1 = instruction.getParameter1();
+					Integer parameter2 = instruction.getParameter2();
 
-						Integer sum = addNumbers(number1, number2);
+					switch (instruction.getOpCode()) {
 
-						int index = inputs.get(i + 3);
-
-						inputs.set(index, sum);
-
+					case ADD:
+						instruction.getInputs().set(instruction.getInputs().get(i + 3),
+								addNumbers(parameter1, parameter2));
 						i += 4;
+						break;
 
-					} else if (input == 2) {
-
-						Integer number1 = inputs.get(inputs.get(i + 1));
-
-						Integer number2 = inputs.get(inputs.get(i + 2));
-
-						Integer multiply = multiplyNumbers(number1, number2);
-
-						int index = inputs.get(i + 3);
-
-						inputs.set(index, multiply);
-
+					case MULTIPLY:
+						instruction.getInputs().set(instruction.getInputs().get(i + 3),
+								multiplyNumbers(parameter1, parameter2));
 						i += 4;
+						break;
 
-					} else if (input == 99) {
+					case END:
+						app = false;
 						break;
 					}
+				}
 
-					if (inputs.get(0) == 19690720) {
-						return Integer.valueOf(100 * noun + verb);
-					}
+				if (instruction.getInputs().get(0) == 19690720) {
+					return 100 * noun + verb;
 				}
 			}
 		}
 
-		return Integer.MAX_VALUE;
+		throw new IllegalStateException("Didn`t find answer");
 	}
 }
