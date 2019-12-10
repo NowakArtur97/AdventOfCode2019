@@ -39,10 +39,8 @@ public class InputsReaderImpl implements InputsReader {
 	}
 
 	private List<Integer> convertStringToListOfIntegers(String string) {
-		
-		return Stream.of(string.split(","))
-				.map(Integer::parseInt)
-				.collect(Collectors.toList());
+
+		return Stream.of(string.split(",")).map(Integer::parseInt).collect(Collectors.toList());
 	}
 
 }

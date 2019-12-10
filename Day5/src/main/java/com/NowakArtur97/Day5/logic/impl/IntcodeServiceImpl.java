@@ -1,7 +1,7 @@
 package com.NowakArtur97.Day5.logic.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import com.NowakArtur97.Day5.logic.api.IntcodeService;
 import com.NowakArtur97.Day5.model.Instruction;
@@ -11,11 +11,13 @@ import com.NowakArtur97.Day5.util.impl.InputsReaderImpl;
 public class IntcodeServiceImpl implements IntcodeService {
 
 	private final InputsReader inputsReader;
-	private final List<Integer> originalInputs;
+	private final Stack<Integer> outputsStack;
+	private final List<Integer> inputs;
 
 	public IntcodeServiceImpl() {
 		inputsReader = new InputsReaderImpl();
-		originalInputs = inputsReader.loadInputsFromFile();
+		inputs = inputsReader.loadInputsFromFile();
+		outputsStack = new Stack<>();
 	}
 
 	public Integer addNumbers(Integer number1, Integer number2) {
@@ -28,7 +30,7 @@ public class IntcodeServiceImpl implements IntcodeService {
 		return number1 * number2;
 	}
 
-	private void runProgram(List<Integer> inputs) {
+	private void runProgram(Stack<Integer> inputsStack) {
 
 		int i = 0;
 
@@ -42,7 +44,8 @@ public class IntcodeServiceImpl implements IntcodeService {
 			switch (instruction.getOpCode()) {
 
 			case ADD:
-				instruction.getInputs().set(instruction.getInputs().get(i + 3), addNumbers(parameter1, parameter2));
+				instruction.getInputs().set(instruction.getInputs().get(i + 3), 
+						addNumbers(parameter1, parameter2));
 				i += 4;
 				break;
 
@@ -52,8 +55,17 @@ public class IntcodeServiceImpl implements IntcodeService {
 				i += 4;
 				break;
 
-			case END:
+			case INPUT:
+				instruction.getInputs().set(instruction.getInputs().get(i + 1), inputsStack.pop());
+				i += 2;
+				break;
 
+			case OUTPUT:
+				outputsStack.push(parameter1);
+				i += 2;
+				break;
+
+			case END:
 				return;
 			}
 		}
@@ -62,36 +74,17 @@ public class IntcodeServiceImpl implements IntcodeService {
 	@Override
 	public Integer processIntcodeFirstAnswer() {
 
-		List<Integer> inputs = new ArrayList<>(originalInputs);
+		final Stack<Integer> inputsStack = new Stack<>();
 
-		inputs.set(1, 12);
-		inputs.set(2, 2);
+		inputsStack.push(1);
 
-		runProgram(inputs);
+		runProgram(inputsStack);
 
-		return inputs.get(0);
+		return outputsStack.pop();
 	}
 
 	@Override
 	public Integer processIntcodeSecondAnswer() {
-
-		List<Integer> inputs;
-
-		for (int noun = 0; noun < 100; noun++) {
-			for (int verb = 0; verb < 100; verb++) {
-
-				inputs = new ArrayList<>(originalInputs);
-
-				inputs.set(1, noun);
-				inputs.set(2, verb);
-
-				runProgram(inputs);
-
-				if (inputs.get(0) == 19690720) {
-					return 100 * noun + verb;
-				}
-			}
-		}
 
 		throw new IllegalStateException("Didn`t find answer");
 	}
