@@ -1,4 +1,4 @@
-package com.NowakArtur97.Day2.enums;
+package com.NowakArtur97.Day5.enums;
 
 public enum Mode {
 	POSITION, IMMEDIATE;
@@ -7,6 +7,8 @@ public enum Mode {
 		switch (code) {
 		case 0:
 			return POSITION;
+		case 1:
+			return IMMEDIATE;
 		default:
 			throw new UnsupportedOperationException("Unknown mode: " + code);
 		}

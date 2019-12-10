@@ -1,15 +1,16 @@
-package com.NowakArtur97.Day2.model;
+package com.NowakArtur97.Day5.model;
 
 import java.util.List;
 
-import com.NowakArtur97.Day2.enums.Mode;
-import com.NowakArtur97.Day2.enums.OpCode;
+import com.NowakArtur97.Day5.enums.Mode;
+import com.NowakArtur97.Day5.enums.OpCode;
 
 public class Instruction {
 
 	private final OpCode opCode;
 	private final Integer parameter1;
 	private final Integer parameter2;
+	private final Integer parameter3;
 	private final List<Integer> inputs;
 
 	public Instruction(int i, List<Integer> inputs) {
@@ -18,6 +19,7 @@ public class Instruction {
 		this.opCode = OpCode.getOpCode(code % 100);
 		this.parameter1 = getParameter(Mode.getMode((code / 100) % 2), i + 1);
 		this.parameter2 = getParameter(Mode.getMode((code / 1000) % 2), i + 2);
+		this.parameter3 = getParameter(Mode.getMode((code / 10000) % 2), i + 3);
 	}
 
 	private Integer getParameter(Mode mode, int offset) {
@@ -28,6 +30,8 @@ public class Instruction {
 		switch (mode) {
 		case POSITION:
 			return ref >= 0 && ref < getInputs().size() ? getInputs().get(ref) : null;
+		case IMMEDIATE:
+			return ref;
 		default:
 			throw new UnsupportedOperationException();
 		}
@@ -43,6 +47,10 @@ public class Instruction {
 
 	public Integer getParameter2() {
 		return parameter2;
+	}
+
+	public Integer getParameter3() {
+		return parameter3;
 	}
 
 	public List<Integer> getInputs() {
