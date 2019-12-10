@@ -2,7 +2,7 @@ package com.NowakArtur97.Day5.enums;
 
 public enum OpCode {
 
-	ADD, MULTIPLY, INPUT, OUTPUT, END;
+	ADD, MULTIPLY, INPUT, OUTPUT, JUMP_IF_TRUE, JUMP_IF_FALSE, LESS_THAN, EQUALS, END;
 
 	public static OpCode getOpCode(int code) {
 		switch (code) {
@@ -14,6 +14,14 @@ public enum OpCode {
 			return INPUT;
 		case 4:
 			return OUTPUT;
+		case 5:
+			return JUMP_IF_TRUE;
+		case 6:
+			return JUMP_IF_FALSE;
+		case 7:
+			return LESS_THAN;
+		case 8:
+			return EQUALS;
 		case 99:
 			return END;
 		default:

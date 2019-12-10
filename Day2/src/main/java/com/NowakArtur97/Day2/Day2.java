@@ -8,7 +8,8 @@ public class Day2 {
 	private static final IntcodeService intcodeService = new IntcodeServiceImpl();
 
 	public static void main(String[] args) {
-		System.out.println("First answer " + intcodeService.processIntcodeFirstAnswer());
-		System.out.println("Second answer " + intcodeService.processIntcodeSecondAnswer());
+		
+		System.out.println("First answer: " + intcodeService.processIntcodeFirstAnswer());
+		System.out.println("Second answer: " + intcodeService.processIntcodeSecondAnswer());
 	}
 }

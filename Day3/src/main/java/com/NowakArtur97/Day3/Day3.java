@@ -9,7 +9,6 @@ public class Day3 {
 	public static void main(String[] args) throws Exception {
 
 		System.out.println("First Answer: " + crossedWires.countManhattanDistanceFirstAnswer());
-		
 		System.out.println("Second Answer: " + crossedWires.countManhattanDistanceSecondAnswer()); 
 	}
 }

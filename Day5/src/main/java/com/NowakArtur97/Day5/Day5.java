@@ -7,7 +7,9 @@ public class Day5 {
 	private final static IntcodeService intcodeService = new IntcodeServiceImpl();
 
 	public static void main(String[] args) {
-		
+
 		System.out.println("First Answer: " + intcodeService.processIntcodeFirstAnswer());
+		System.out.println("Second Answer: " + intcodeService.processIntcodeSecondAnswer());
+
 	}
 }

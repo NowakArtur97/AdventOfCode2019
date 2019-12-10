@@ -30,11 +30,11 @@ public class IntcodeServiceImpl implements IntcodeService {
 
 	private void runProgram(List<Integer> inputs) {
 
-		int i = 0;
+		int ip = 0;
 
 		while (true) {
 
-			Instruction instruction = new Instruction(i, inputs);
+			Instruction instruction = new Instruction(ip, inputs);
 
 			Integer parameter1 = instruction.getParameter1();
 			Integer parameter2 = instruction.getParameter2();
@@ -42,14 +42,14 @@ public class IntcodeServiceImpl implements IntcodeService {
 			switch (instruction.getOpCode()) {
 
 			case ADD:
-				instruction.getInputs().set(instruction.getInputs().get(i + 3), addNumbers(parameter1, parameter2));
-				i += 4;
+				instruction.getInputs().set(instruction.getInputs().get(ip + 3), addNumbers(parameter1, parameter2));
+				ip += 4;
 				break;
 
 			case MULTIPLY:
-				instruction.getInputs().set(instruction.getInputs().get(i + 3),
+				instruction.getInputs().set(instruction.getInputs().get(ip + 3),
 						multiplyNumbers(parameter1, parameter2));
-				i += 4;
+				ip += 4;
 				break;
 
 			case END:
