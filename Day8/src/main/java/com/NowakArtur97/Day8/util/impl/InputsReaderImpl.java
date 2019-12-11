@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -17,7 +18,7 @@ public class InputsReaderImpl implements InputsReader {
 			"C:\\Users\\Samsung\\Spring\\eclipse-workspace\\Projects\\Advent of Code\\Day8\\src\\resources\\inputs.txt");
 
 	@Override
-	public List<Integer> loadInputsFromFile() {
+	public Stack<Integer> loadInputsFromFile() {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -35,7 +36,13 @@ public class InputsReaderImpl implements InputsReader {
 			System.out.println("IO Exception " + e.getMessage());
 		}
 
-		return convertStringToListOfIntegers(sb.toString());
+		List<Integer> inputs = convertStringToListOfIntegers(sb.toString());
+		Stack<Integer> stack = new Stack<>();
+		for (int i = inputs.size() - 1; i >= 0; i--) {
+			stack.push(inputs.get(i));
+		}
+
+		return stack;
 	}
 
 	private List<Integer> convertStringToListOfIntegers(String string) {

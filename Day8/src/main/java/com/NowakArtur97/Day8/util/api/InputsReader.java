@@ -1,8 +1,8 @@
 package com.NowakArtur97.Day8.util.api;
 
-import java.util.List;
+import java.util.Stack;
 
 public interface InputsReader {
 
-	List<Integer> loadInputsFromFile();
+	Stack<Integer> loadInputsFromFile();
 }
