@@ -36,12 +36,19 @@ public class InputsReaderImpl implements InputsReader {
 			System.out.println("IO Exception " + e.getMessage());
 		}
 
-		List<Integer> inputs = convertStringToListOfIntegers(sb.toString());
+		Stack<Integer> stack = convertListToStack(sb.toString());
+
+		return stack;
+	}
+
+	private Stack<Integer> convertListToStack(String string) {
+		
+		List<Integer> inputs = convertStringToListOfIntegers(string);
+		
 		Stack<Integer> stack = new Stack<>();
 		for (int i = inputs.size() - 1; i >= 0; i--) {
 			stack.push(inputs.get(i));
 		}
-
 		return stack;
 	}
 
