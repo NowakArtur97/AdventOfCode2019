@@ -1,5 +1,7 @@
 package com.NowakArtur97.Day7.logic.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
@@ -11,6 +13,8 @@ import com.NowakArtur97.Day7.util.impl.InputsReaderImpl;
 public class IntcodeServiceImpl implements IntcodeService {
 
 	private final InputsReader inputsReader;
+
+	private List<int[]> listOfPhaseSettings = new ArrayList<>();
 
 	public IntcodeServiceImpl() {
 		inputsReader = new InputsReaderImpl();
@@ -90,11 +94,12 @@ public class IntcodeServiceImpl implements IntcodeService {
 	@Override
 	public Integer processIntcodeFirstAnswer() {
 
-		final Stack<Integer> inputsStack = new Stack<>();
+		int[] phaseSettings = { 0, 1, 2, 3, 4 };
 
-		inputsStack.push(1);
+		List<int[]> listOfPhaseSettings = findAllPhaseSettings(phaseSettings, phaseSettings.length,
+				phaseSettings.length);
 
-		return runProgram(inputsStack);
+		return findHighestSignalToSendThrusters(listOfPhaseSettings);
 
 	}
 
@@ -106,5 +111,58 @@ public class IntcodeServiceImpl implements IntcodeService {
 		inputsStack.push(5);
 
 		return runProgram(inputsStack);
+	}
+
+	private List<int[]> findAllPhaseSettings(int phaseSettings[], int size, int n) {
+
+		if (size == 1) {
+			listOfPhaseSettings.add(phaseSettings);
+		}
+
+		for (int i = 0; i < size; i++) {
+			findAllPhaseSettings(phaseSettings, size - 1, n);
+
+			if (size % 2 == 1) {
+				int temp = phaseSettings[0];
+				phaseSettings[0] = phaseSettings[size - 1];
+				phaseSettings[size - 1] = temp;
+			}
+
+			else {
+				int temp = phaseSettings[i];
+				phaseSettings[i] = phaseSettings[size - 1];
+				phaseSettings[size - 1] = temp;
+			}
+		}
+
+		return listOfPhaseSettings;
+	}
+
+	private int findHighestSignalToSendThrusters(List<int[]> listOfPhaseSettings) {
+
+		int highestSignal = 0;
+
+		for (int[] phaseSettings : listOfPhaseSettings) {
+
+			Stack<Integer> inputsStack = new Stack<>();
+
+			int signal = 0;
+
+			for (int i = 0; i < phaseSettings.length; i++) {
+
+				inputsStack.push(phaseSettings[i]);
+
+				inputsStack.push(signal);
+
+				signal = runProgram(inputsStack);
+			}
+
+			if (signal > highestSignal) {
+				System.out.println(Arrays.toString(phaseSettings));
+				highestSignal = signal;
+			}
+		}
+
+		return highestSignal;
 	}
 }
